@@ -120,7 +120,7 @@ const Navbar = () => {
         />
 
         <span className = {styles.logoText}>
-          KARZONE
+         VROOMIFY
         </span>
         </div>
         </Link>

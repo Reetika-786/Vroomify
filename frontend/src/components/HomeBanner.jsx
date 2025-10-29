@@ -136,7 +136,7 @@ export default function HeroSleek() {
     <div className={styles.ctaContainer}>
         <div className = {styles.ctaCard}>
             <div>
-                <p className = {styles.subtitle}> KARZONE</p>
+                <p className = {styles.subtitle}> VROOMIFY</p>
                 <h3 className = {styles.title}> Next-gen fleet. Instant drive.</h3>
                 <p className = {styles.description}> 
                     Rent your Dream Car. Transparent princing. Book in seconds.

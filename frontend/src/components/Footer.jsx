@@ -2,7 +2,7 @@ import React from 'react'
 import { footerStyles as styles } from '../assets/dummyStyles'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logocar.png';
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube, FaMapMarkedAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -24,7 +24,7 @@ const Footer = () => {
                                 objectFit: "contain"
                             }}
                             />
-                            <span className = {styles.logoText}>  KARZONE</span>
+                            <span className = {styles.logoText}>  VROOMIFY</span>
                         </div>
                     </Link>
                     <p className={styles.description}>
@@ -43,7 +43,95 @@ const Footer = () => {
                 </div>
 
                 {/*Quick Links */}
-                
+                <div>
+                <h3 className={styles.sectionTitle}>
+                    Quick Links 
+                    <span className={styles.underline} />
+                </h3>
+                <ul className={styles.linkList}>
+                    {['Home', 'Cars', 'Contact Us'].map((link, i) => (
+                        <li key={i} >
+                            <a href={
+                                link === 'Home' 
+                                ? '/' 
+                                : link === 'Contact Us'
+                                ? '/contact' 
+                                : '/cars'
+                            } className = {styles.linkItem}
+                            >
+                                <span className={styles.bullet}></span>
+                                {link}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+                </div>
+
+                {/*Contact*/}
+                <div>
+                    <h3 className={styles.sectionTitle}>Contact Us
+                        <span className={styles.underline} />
+                    </h3>
+                    
+                    <ul className={styles.contactList}>
+                        <li className={styles.contactItem}>
+                            <FaMapMarkedAlt className={styles.contactIcon}/>
+                            <span> 55, Park Avenue , Kkp Road, 152026</span>
+                        </li>
+                        <li className={styles.contactItem}>
+                            <FaPhone className={styles.contactIcon}/>
+                            <span>+91-999-888-7766</span>
+                        </li>
+                        <li className={styles.contactItem}>
+                            <FaEnvelope className={styles.contactIcon}/>
+                            <span>reetika@vroomify.com</span>
+                        </li>
+                    </ul>
+
+                    <div className={styles.hoursContainer}>
+                        <h4 className={styles.hoursTitle}>
+                            Business Hours
+                        </h4>
+                         <div className={styles.hoursText}>
+                            <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+                            <p>Saturday: 9:00 AM - 6:00 PM</p>
+                            <p>Sunday: 10:00 AM - 4:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/*Newsletter Subscription */}
+                <div>
+                    <h3 className={styles.sectionTitle}>
+                        Newsletter
+                        <span className={styles.underline}/>
+                    </h3>
+                    <p className={styles.newsletterText}>
+                        Subscribe for the latest updates and offers.
+                    </p>
+
+                    <form className="space-y-3">
+                        <input 
+                        type="email"
+                        placeholder="Your Email Address"
+                        className = {styles.input}
+                        />
+                        <button type="submit" className={styles.subscribeButton}>
+                            Subscribe Now!
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {/*Bottom Copyright */}
+            <div className={styles.copyright}>
+                <p>&copy; {new Date().getFullYear} VROOMIFY. All Rights Reserved</p>
+                <p className="mt-3md:mt-0">
+                    Designed by {' '}
+                    <a href="https://www.linkedin.com/in/reetika-6ab454293/" target="_blank" rel="noopener noreferrer" className="{styles.designerLink}">
+                         Reetika Dhingra
+                    </a>
+                </p>
             </div>
         </div>
     </footer>
