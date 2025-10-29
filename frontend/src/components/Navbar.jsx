@@ -156,7 +156,7 @@ const Navbar = () => {
                 Logout</span>
               </button>
             ) : (
-              <button
+              <Link
               to = "/login"
               className = {styles.authButton}
               aria-label = "login"
@@ -164,7 +164,7 @@ const Navbar = () => {
                 <FaUser className = "text-base" />
                 <span className={styles.authText}>
                 Login</span>
-              </button>
+              </Link>
             )}
       </div>
 

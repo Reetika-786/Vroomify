@@ -125,7 +125,7 @@ const Footer = () => {
 
             {/*Bottom Copyright */}
             <div className={styles.copyright}>
-                <p>&copy; {new Date().getFullYear} VROOMIFY. All Rights Reserved</p>
+                <p>&copy; {new Date().getFullYear()} VROOMIFY. All Rights Reserved</p>
                 <p className="mt-3md:mt-0">
                     Designed by {' '}
                     <a href="https://www.linkedin.com/in/reetika-6ab454293/" target="_blank" rel="noopener noreferrer" className="{styles.designerLink}">
