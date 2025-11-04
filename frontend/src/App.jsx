@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home';
 import Login from './components/Login';
 import SignUp from './components/signUp';
-import Contact from './components/Contact';
+import ContactPage from './pages/ContactPage';
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
       <Route path='/' element={<Home />} />
       <Route path= '/Login' element = {<Login />} ></Route>
       <Route path= '/Signup' element = {<SignUp />} ></Route>
-      <Route path= '/Contact' element = {<Contact />} ></Route>
+      <Route path= '/Contact' element = {<ContactPage />} ></Route>
     </Routes>
   );
 };
