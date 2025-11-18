@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import User from '../models/userModel.js'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
+import jwt from "jsonwebtoken";
 
 //create token function
 
@@ -95,3 +96,53 @@ export async function register(req, res){
     }
 }
 
+//login function
+
+export async function login(req, res){
+    try{
+        const emailraw = String(req.body.email || "").trim();
+        const email = validator.normalizeEmail(emailraw) || emailraw.toLowerCase();
+        const password = String(req.body.password || "");
+
+        if( !email || !password){
+            return res.status(400).json({
+                success : false,
+                message: 'All fields are required!'
+            });
+        }
+
+        const user = await User.findOne({email});
+        if(! user)
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
+            })
+
+            const isMatch = await bcrypt.compare(password,user.password);
+            if(! isMatch) return res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
+            })
+
+            const token = jwt.sign(
+                {id:user._id}, JWT_SECRET, {expiresIn: '24h'}
+            );
+            return res.status(200).json({
+                success: true, 
+                message: 'Login Successful',
+                token,
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email : user.email
+                }
+            });
+    }
+    catch(error){
+        console.error('Login error', err);
+        return res.status(500).json({
+            success : false,
+            message : 'Server error'
+        })
+    }
+}

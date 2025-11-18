@@ -1,6 +1,6 @@
 import React, { useState , useEffect} from 'react'
 import { signupStyles } from '../assets/dummyStyles'
-import {FaArrowLeft, FaUser, FaLock, FaEnvelope, FaEye, FaCheck} from 'react-icons/fa'
+import {FaArrowLeft, FaUser, FaLock, FaEnvelope, FaEye, FaCheck, FaEyeSlash} from 'react-icons/fa'
 import {useNavigate} from 'react-router-dom';
 import logo from '../assets/logocar.png';
 import { toast , ToastContainer} from 'react-toastify';
