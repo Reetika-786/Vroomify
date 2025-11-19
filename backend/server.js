@@ -1,20 +1,43 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+
+import path from 'path';
+import helmet from 'hemlet'
+import { fileURLToPath } from 'url';
+
+
 import {connectDB} from './config/db.js'
-import userModel from './models/userModel.js';
 import userRouter from './routes/userRoutes.js';
 
 const app = express();
 const PORT = 5000;
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 connectDB();
 
 //middleware
 app.use(cors());
+app.use(
+    helmet({
+        crossOriginResourcePolicy: {policy: 'cross-origin'},
+    })
+)
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+
+app.use(
+    '/uploads', (req, res, next)=>{
+        res.setHeader('Access-Control-Allow-Origin', "*");
+        //it sets a CORS header. This allows any frontend to load images/files from your /uploads folder.
+        next();
+    },
+    express.static(path.join(process.cwd(), 'uploads'))
+)
+
 
 //routes
 app.use('/api/auth', userRouter);
