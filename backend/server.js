@@ -3,12 +3,13 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 
 import path from 'path';
-import helmet from 'hemlet'
+import helmet from 'helmet'
 import { fileURLToPath } from 'url';
 
 
 import {connectDB} from './config/db.js'
 import userRouter from './routes/userRoutes.js';
+import carRouter from './routes/carRoutes.js';
 
 const app = express();
 const PORT = 5000;
@@ -41,6 +42,7 @@ app.use(
 
 //routes
 app.use('/api/auth', userRouter);
+app.use('/api/cars', carRouter);
 
 //ping (health check endpoint)
 app.get('/api/ping', (req, res) => res.json({
