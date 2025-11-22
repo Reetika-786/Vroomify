@@ -117,7 +117,7 @@ export const createCheckoutSession = async (req , res) => {
         return res.status(500).json({
             success: false,
             message: 'Failed to create Stripe Checkout session',
-            error: stripeErr.message || Stripe(stripeErr)
+            error: stripeErr.message || String(stripeErr)
         });
     }
 

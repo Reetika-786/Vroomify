@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import Booking from '../models/Booking.js';
-import Car from '../models/Car.js';
+import Booking from '../models/bookingModel.js';
+import Car from '../models/carModel.js';
 
 import path from 'path';
 import fs from 'fs';
@@ -88,7 +88,7 @@ export const createBooking = async (req, res) => {
     if(overlappingCount > 0){
         await session.abortTransaction();
         session.endSession();
-        return res.status(400).json({ success: false, message: 'Car is not available for the selected dates' });
+        return res.status(409).json({ success: false, message: 'Car is not available for the selected dates' });
     }
 
     const bookingData = {
