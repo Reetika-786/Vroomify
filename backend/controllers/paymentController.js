@@ -96,7 +96,7 @@ export const createCheckoutSession = async (req , res) => {
                     description: `Rental ${pickupDate} → ${returnDate}`,
                     // images: [safeImage].filter(Boolean),//output will be true/false
                 },
-                unit_amount: Math.round(total * 100),
+                unit_amount: Math.round(total * 100), //Stripe works in paise, not rupees.
                 },
                 quantity: 1,
             },
@@ -149,12 +149,14 @@ export const createCheckoutSession = async (req , res) => {
 //successfull payment verification
 export const confirmPayment = async(req, res)=>{
     try{
+        //Step 1: Validate session_id
         const {session_id} = req.query;
         if(! session_id) return res.status(400).json({
             success: false,
             message: 'Session_id required'
         });
 
+        //Step 2: Get Stripe instance again
         let stripe;
         try{
             stripe = getStripe();
@@ -165,13 +167,15 @@ export const confirmPayment = async(req, res)=>{
                 error: err.message
             })
         }
-
+    
+        //Step 3: Retrieve Session
         const session = await stripe.checkout.session.retrieve(session_id);
         if(! session) return res.json({
             success: false,
             message: 'Session not found'
         });
 
+        //Step 4: Check payment_status
         if(session.payment_status !=='paid'){
             return res.status(400).json({
                 success: false,
@@ -180,6 +184,7 @@ export const confirmPayment = async(req, res)=>{
             });
         }
 
+        //Step 5: Update booking
             const bookingId = session.metadata?.bookingId;
 
             let order = null;
