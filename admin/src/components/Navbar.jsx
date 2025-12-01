@@ -3,6 +3,7 @@ import {navbarStyles as s} from '../assets/dummyStyles'
 import {Link} from 'react-router-dom'
 import logo from '../assets/logocar.png'
 import { PlusCircle, Car, CalendarCheck, Menu, X } from 'lucide-react'
+import { useEffect } from 'react';
 
 const navLinks = [
   { path: "/", icon: PlusCircle, label: "Add Car" },
