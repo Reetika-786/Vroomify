@@ -165,6 +165,7 @@ const addCar = () => {
   };
 
   const renderInputField = (field) => {
+    return(
     <div key={field.name}>
       <label
         className={
@@ -191,7 +192,8 @@ const addCar = () => {
         max={field.max}
         {...field.props}
       />
-    </div>;
+    </div>
+    );
   };
 
   const renderSelectField = (field) => (
