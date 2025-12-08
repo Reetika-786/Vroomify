@@ -22,6 +22,13 @@ const ProtectedRoute = ({children}) => {
   return children;
 };
 
+const RedirectIfAuthenticated = ({children}) => {
+  const authToken = localStorage.getItem('token');
+  if(authToken){
+    return <Navigate to='/' replace />;
+  }
+  return children;
+};
 
 const App = () => {
 
