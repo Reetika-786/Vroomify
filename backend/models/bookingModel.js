@@ -148,4 +148,4 @@ bookingSchema.post('remove', async function (doc, next){
     }
 })
 
-export default mongoose.models.Booking || mongoose.model
+export default mongoose.models.Booking || mongoose.model("Booking", bookingSchema);
