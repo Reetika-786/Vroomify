@@ -9,6 +9,8 @@ import CarPage from './pages/CarPage'
 import CarDetails from './components/CarDetail';
 import CarDetailPage from './pages/CarDetailPage';
 import { FaArrowUp } from 'react-icons/fa';
+import MyBookings from './components/MyBookings';
+import VerifyPaymentPage from './pages/VerifyPaymentPage';
 
 
 //protected route
@@ -67,6 +69,29 @@ const App = () => {
           </ProtectedRoute>
         }
       />
+      <Route path = '/bookings' element= {
+        <ProtectedRoute>
+          <MyBookings />
+        </ProtectedRoute>
+      }
+      />
+
+      <Route path = '/login' element={
+        <RedirectIfAuthenticated>
+          <Login />
+        </RedirectIfAuthenticated>
+      } 
+      />
+      <Route path = '/signup' element={
+        <RedirectIfAuthenticated>
+          <SignUp />
+        </RedirectIfAuthenticated>
+        } 
+        />
+
+        <Route path = '/success' element={<VerifyPaymentPage/>} />
+        <Route path = '/cancel' element={<VerifyPaymentPage />}/>
+        <Route path = "*" element={<Navigate to='/' replace/>}/>
     </Routes>
 
     {showButton && (
