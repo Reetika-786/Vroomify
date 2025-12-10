@@ -497,17 +497,6 @@ const manageCar = () => {
         </div>
       </div>
 
-      <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-5 mb-6 border-gray-800">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <StatCard title= "Total Cars" value = {cars.length} icon={FaCar} />
-          <FilterSelect
-            value ={categoryFilter}
-            onChange={setCategoryFilter}
-            categories={categories}
-          />
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredCars.map((car) => (
           <CarCard

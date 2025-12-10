@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 import dotenv from 'dotenv'
 
 //client url stores frontend url
-const CLIENT_URL = 'http://localhost:5173'
+const CLIENT_URL = 'http://localhost:5174'
 const STRIPE_API_VERSION = "2022-11-15";
 
 //get stripe from .env
@@ -169,7 +169,7 @@ export const confirmPayment = async(req, res)=>{
         }
     
         //Step 3: Retrieve Session
-        const session = await stripe.checkout.session.retrieve(session_id);
+        const session = await stripe.checkout.sessions.retrieve(session_id);
         if(! session) return res.json({
             success: false,
             message: 'Session not found'

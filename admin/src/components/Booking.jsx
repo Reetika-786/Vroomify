@@ -21,6 +21,7 @@ import {
   FaTachometerAlt,
   FaUser,
   FaUserFriends,
+  FaCalendarAlt,FaEdit
 } from "react-icons/fa";
 // import { fileURLToPath } from "url";
 
@@ -44,7 +45,7 @@ const formatDate = (s) => {
 };
 
 const makeImageUrl = (filename) =>
-  filename ? `${baseURL}/uploads/${filename}` : "";
+  filename ? `${BASE}/uploads/${filename}` : "";
 
 const normalizeDetails = (d = {}, car = {}) => ({
   seats: d.seats ?? d.numSeats ?? car.seats ?? "",
@@ -116,15 +117,15 @@ const Spec = ({ icon, label, value }) => (
   </div>
 );
 
-const StatusIndicator = ({ status, isEditing, newstatus, onStatusChange }) => {
+const StatusIndicator = ({ status, isEditing, newStatus, onStatusChange }) => {
   return isEditing ? (
     <select
-      value={newstatus}
+      value={newStatus}
       onChange={onStatusChange}
       className="bg-gray-800/50 text-sm px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-orange-500"
     >
       {Object.keys(statusConfig)
-        .filter(k !== "default")
+        .filter((k) => k !== "default")
         .map((opt) => (
           <option value={opt} key={opt}>
             {opt.charAt(0).toUpperCase() + opt.slice(1)}
@@ -144,7 +145,7 @@ const StatusIndicator = ({ status, isEditing, newstatus, onStatusChange }) => {
 const BookingCardHeader = ({ booking, onToggleDetails, isExpanded }) => (
   <div className={BookingPageStyles.bookingCardHeader}>
     <div className={BookingPageStyles.bookingIconContainer}>
-      <FaCalenderAlt className={BookingPageStyles.bookingIcon} />
+      <FaCalendarAlt className={BookingPageStyles.bookingIcon} />
     </div>
     <div>
       <div className={BookingPageStyles.bookingCustomer}>
@@ -651,7 +652,7 @@ const Booking = () => {
             booking={booking}
             isExpanded={expandedBooking === booking.id}
             isEditing={editingStatus === booking.id}
-            newStatus={newstatus}
+            newStatus={newStatus}
             onToggleDetails={() => handleToggleDetails(booking.id)}
             onEditStatus={(e) => {
               e.stopPropagation();
@@ -659,6 +660,11 @@ const Booking = () => {
             }}
             onStatusChange={(e) => setNewStatus(e.target.value)}
             onSaveStatus={(e) => {
+              e.stopPropagation();
+              // handleCancelEdit();
+              updateStatus(booking.id);
+            }}
+            onCancelEdit={(e) => {
               e.stopPropagation();
               handleCancelEdit();
             }}

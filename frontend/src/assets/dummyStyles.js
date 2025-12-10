@@ -42,6 +42,8 @@ export const navbarStyles = {
   mobileAuthButton: "w-full flex items-center px-4 py-3 text-left rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
 };
 
+
+
 // src/assets/dummyStyles.js
 // ... existing navbar styles ...
 
@@ -89,8 +91,7 @@ export const loginStyles = {
     container: "space-y-4 sm:space-y-6",
     inputContainer: "relative z-10",
     inputWrapper: "relative",
-    // inputIcon: "absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-orange-300/80",
-    inputIcon: "absolute inset-y-0 left-0 pl-3 flex items-center z-20 text-orange-200",
+    inputIcon: "absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-orange-300/80",
     input: "w-full pl-10 pr-3 py-3 sm:py-4 rounded-xl text-sm sm:text-base placeholder-opacity-70 border transition duration-300 focus:outline-none focus:ring-2 focus:border-transparent bg-white/5 backdrop-blur-sm text-white/90 placeholder-orange-200/40 border-white/10 focus:ring-orange-500/70",
     passwordToggle: "absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer transition-colors text-orange-300/80 hover:text-orange-200/90",
     submitButton: "w-full py-3 sm:py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 relative overflow-hidden group bg-gradient-to-r from-orange-500/90 to-orange-600/90 text-white/95 hover:from-orange-600/90 hover:to-orange-700/90 focus:ring-orange-500/70",
@@ -412,4 +413,92 @@ export const carPageStyles = {
   buttonIcon: "ml-3 h-4 w-4 transition-transform group-hover:translate-x-1",
   decor1: "absolute -top-16 -left-16 w-32 h-32 rounded-full bg-gradient-to-r from-sky-500/10 to-teal-500/10 blur-3xl z-0",
   decor2: "absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-r from-amber-500/10 to-rose-500/10 blur-3xl z-0"
+};
+
+
+// src/assets/dummyStyles.js
+export const myBookingsStyles = {
+  // Page container
+  pageContainer: "min-h-screen bg-gradient-to-b pt-40 from-gray-900 to-black text-white py-12 px-4 sm:px-6 lg:px-8",
+  
+  // Title
+  title: "text-3xl sm:text-4xl pb-3 md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-500",
+  subtitle: "text-gray-400 max-w-2xl mx-auto",
+  
+  // Filter buttons
+  filterButton: (isActive, type) => {
+    const base = "px-4 py-2 rounded-full flex items-center gap-2 transition-all";
+    if (!isActive) return `${base} bg-gray-800 text-gray-300 hover:bg-gray-700`;
+    
+    switch(type) {
+      case "all": return `${base} bg-orange-600 text-white`;
+      case "upcoming": return `${base} bg-blue-600 text-white`;
+      case "completed": return `${base} bg-green-600 text-white`;
+      case "cancelled": return `${base} bg-red-600 text-white`;
+      default: return base;
+    }
+  },
+  
+  // Loading spinner
+  loadingSpinner: "animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-500",
+  
+  // Error state
+  errorContainer: "text-center py-8 bg-gray-800/50 rounded-2xl border border-gray-700",
+  errorText: "text-red-400",
+  retryButton: "mt-4 px-4 py-2 bg-orange-600 rounded-lg text-white",
+  
+  // Empty state
+  emptyState: "text-center py-16 bg-gray-800/50 rounded-2xl border border-gray-700",
+  emptyIconContainer: "mx-auto w-24 h-24 rounded-full bg-gray-800 flex items-center justify-center mb-6",
+  emptyIcon: "text-4xl text-orange-500",
+  emptyTitle: "text-2xl font-semibold mb-2",
+  emptyText: "text-gray-400 max-w-md mx-auto",
+  browseButton: "inline-block mt-6 px-6 py-3 bg-gradient-to-r from-orange-600 to-orange-700 text-white rounded-lg flex items-center justify-center gap-2",
+  
+  // Booking card
+  bookingCard: "bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-gray-700 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-transform",
+  cardImageContainer: "relative h-48 overflow-hidden",
+  cardImage: "w-full h-full object-cover transition-transform duration-500 hover:scale-105",
+  cardContent: "p-5",
+  cardHeader: "flex justify-between items-start mb-3",
+  carTitle: "text-xl font-bold",
+  carSubtitle: "text-gray-400",
+  priceText: "text-orange-400 font-bold text-xl",
+  daysText: "text-gray-500 text-sm",
+  detailSection: "space-y-4 mt-2 pt-4 border-t border-gray-700",
+  detailItem: "flex items-center gap-3",
+  detailIcon: "w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center text-orange-400",
+  detailLabel: "text-gray-400 text-sm",
+  detailValue: "font-medium",
+  cardActions: "mt-6 pt-4 border-t border-gray-700 flex gap-3",
+  viewDetailsButton: "flex-1 py-2 px-4 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center gap-2",
+  bookAgainButton: "flex-1 py-2 px-4 bg-orange-600 hover:bg-orange-700 rounded-lg flex items-center justify-center gap-2",
+  
+  // Stats cards
+  statsCard: "bg-gray-800/50 p-6 rounded-2xl border border-gray-700",
+  statsValue: (color) => `text-3xl font-bold ${color} mb-2`,
+  statsLabel: "text-gray-400",
+  
+  // Modal
+  modalOverlay: "fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4",
+  modalContainer: "bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-gray-700 max-w-2xl w-full max-h-[90vh] overflow-y-auto",
+  modalHeader: "flex justify-between items-center mb-6",
+  modalTitle: "text-2xl font-bold flex items-center gap-2",
+  modalCloseButton: "p-2 rounded-full hover:bg-gray-700 transition-colors",
+  cancelButton: "px-3 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white mr-2",
+  modalContent: "p-6",
+  modalGrid: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-8",
+  carImageModal: "w-full h-48 object-cover rounded-xl",
+  carTags: "flex flex-wrap gap-2 mt-2",
+  carTag: "px-2 py-1 bg-gray-700 rounded text-sm",
+  infoGrid: "mt-4 grid grid-cols-2 gap-3",
+  infoLabel: "text-gray-400 text-sm",
+  infoValue: "font-medium",
+  priceValue: "font-medium text-orange-400",
+  infoCard: "bg-gray-800/50 p-4 rounded-xl",
+  infoRow: "flex justify-between mb-2",
+  infoDivider: "mt-3 pt-3 border-t border-gray-700",
+  modalActions: "flex gap-4",
+  closeButton: "flex-1 py-3 px-4 bg-gray-700 hover:bg-gray-600 rounded-lg",
+  modalBookButton: "flex-1 py-3 px-4 bg-orange-600 hover:bg-orange-700 rounded-lg flex items-center justify-center gap-2",
 };

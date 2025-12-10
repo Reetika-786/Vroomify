@@ -6,17 +6,16 @@ import Login from './components/Login';
 import SignUp from './components/signUp';
 import ContactPage from './pages/ContactPage';
 import CarPage from './pages/CarPage'
-import CarDetails from './components/CarDetail';
+
 import CarDetailPage from './pages/CarDetailPage';
 import { FaArrowUp } from 'react-icons/fa';
-import MyBookings from './components/MyBookings';
 import VerifyPaymentPage from './pages/VerifyPaymentPage';
-
+import MyBooking from './pages/MyBooking';
 
 //protected route
 const ProtectedRoute = ({children}) => {
   const location = useLocation();
-  const authToken = localStorage.getItem("authToken");
+  const authToken = localStorage.getItem("token");
 
   if(! authToken){
     return <Navigate to ='/login' replace state = {{from : location.pathname}} />;
@@ -71,7 +70,7 @@ const App = () => {
       />
       <Route path = '/bookings' element= {
         <ProtectedRoute>
-          <MyBookings />
+          <MyBooking />
         </ProtectedRoute>
       }
       />
@@ -89,7 +88,7 @@ const App = () => {
         } 
         />
 
-        <Route path = '/success' element={<VerifyPaymentPage/>} />
+        <Route path = '/success/*' element={<VerifyPaymentPage/>} />
         <Route path = '/cancel' element={<VerifyPaymentPage />}/>
         <Route path = "*" element={<Navigate to='/' replace/>}/>
     </Routes>
