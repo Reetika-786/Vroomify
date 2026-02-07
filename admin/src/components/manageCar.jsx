@@ -15,11 +15,13 @@ import {
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
-const BASE = "http://localhost:5000";
+// const BASE = "http://localhost:5000";
+const BASE = import.meta.env.VITE_API_URL;
 const api = axios.create({
   baseURL: BASE,
   headers: { Accept: "application/json" },
 });
+console.log("API URL =", import.meta.env.VITE_API_URL);
 
 // Utility functions
 //makeImageUrl ensures that whether you pass a full URL or just a filename, it always returns a correct, frontend-safe image URL pointing to your server's uploads folder

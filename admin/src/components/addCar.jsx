@@ -4,8 +4,13 @@ import axios from "axios";
 import { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-const baseURL = "http://localhost:5000";
-const api = axios.create({ baseURL });
+// const baseURL = "http://localhost:5000";
+
+const BASE = import.meta.env.VITE_API_URL;
+
+const api = axios.create({
+  baseURL: BASE,
+});
 
 const addCar = () => {
   const initialFormData = {

@@ -54,7 +54,7 @@ export const createCheckoutSession = async (req , res) => {
 
     // create booking (pending)
     const booking = await Booking.create({
-      userId: userId,
+      userId: req.user._id,
       customer: String(customer ?? ""),
       email: String(email ?? ""),
       phone: String(phone ?? ""),

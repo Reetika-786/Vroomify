@@ -23,7 +23,11 @@ const __dirname = path.dirname(__filename);
 connectDB();
 
 //middleware
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
+
 app.use(
     helmet({
         crossOriginResourcePolicy: {policy: 'cross-origin'},

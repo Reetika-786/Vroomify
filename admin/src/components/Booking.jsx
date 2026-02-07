@@ -25,11 +25,23 @@ import {
 } from "react-icons/fa";
 // import { fileURLToPath } from "url";
 
-const BASE = "http://localhost:5000";
+// const BASE = "http://localhost:5000";
+const BASE = import.meta.env.VITE_API_URL;
 const api = axios.create({
   baseURL: BASE,
   headers: { Accept: "application/json" },
 });
+// 🔑 ADD THIS (same file, just below)
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // Utility functions
 const formatDate = (s) => {
