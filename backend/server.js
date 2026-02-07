@@ -32,14 +32,14 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
-app.use(
-    '/uploads', (req, res, next)=>{
-        res.setHeader('Access-Control-Allow-Origin', "*");
-        //it sets a CORS header. This allows any frontend to load images/files from your /uploads folder.
-        next();
-    },
-    express.static(path.join(process.cwd(), 'uploads'))
-)
+// app.use(
+//     '/uploads', (req, res, next)=>{
+//         res.setHeader('Access-Control-Allow-Origin', "*");
+//         //it sets a CORS header. This allows any frontend to load images/files from your /uploads folder.
+//         next();
+//     },
+//     express.static(path.join(process.cwd(), 'uploads'))
+// )
 
 
 //routes

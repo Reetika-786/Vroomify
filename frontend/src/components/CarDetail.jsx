@@ -32,40 +32,39 @@ const api = axios.create({
 const todayISO = () => new Date().toISOString().split("T")[0];
 
 //build image and store in uploads folder
-const buildImageSrc = (image) => {
-  if (!image) return `${API_BASE}/uploads/default-car.png`;
-  if (Array.isArray(image)) image = image[0];
-  if (!image || typeof image !== "string")
-    return `${API_BASE}/uploads/default-car.png`;
-  const t = image.trim();
-  if (!t) return `${API_BASE}/uploads/default-car.png`;
-  if (t.startsWith("http://") || t.startsWith("https://")) return t;
-  if (t.startsWith("/")) return `${API_BASE}${t}`;
-  return `${API_BASE}/uploads/${t}`;
-};
+// const buildImageSrc = (image) => {
+//   if (!image) return `${API_BASE}/uploads/default-car.png`;
+//   if (Array.isArray(image)) image = image[0];
+//   if (!image || typeof image !== "string")
+//     return `${API_BASE}/uploads/default-car.png`;
+//   const t = image.trim();
+//   if (!t) return `${API_BASE}/uploads/default-car.png`;
+//   if (t.startsWith("http://") || t.startsWith("https://")) return t;
+//   if (t.startsWith("/")) return `${API_BASE}${t}`;
+//   return `${API_BASE}/uploads/${t}`;
+// };
 
-
-const handleImageError = (
-  e,
-  fallback = `${API_BASE}/uploads/default-car.png`
-) => {
-  const img = e?.target;
-  if (!img) return;
-  img.onerror = null;
-  img.src = fallback;
-  img.onerror = () => {
-    img.onerror = null;
-    img.src = "https://via.placeholder.com/800x500.png?text=No+Image";
-  };
-  img.alt = img.alt || "Image not available";
-  img.style.objectFit = img.style.objectFit || "cover";
-};
+// const handleImageError = (
+//   e,
+//   fallback = `${API_BASE}/uploads/default-car.png`
+// ) => {
+//   const img = e?.target;
+//   if (!img) return;
+//   img.onerror = null;
+//   img.src = fallback;
+//   img.onerror = () => {
+//     img.onerror = null;
+//     img.src = "https://via.placeholder.com/800x500.png?text=No+Image";
+//   };
+//   img.alt = img.alt || "Image not available";
+//   img.style.objectFit = img.style.objectFit || "cover";
+// };
 
 //number of days calculation
 const calculateDays = (from, to) => {
   if (!from || !to) return 1;
   const days = Math.ceil(
-    (new Date(to) - new Date(from)) / (1000 * 60 * 60 * 24)
+    (new Date(to) - new Date(from)) / (1000 * 60 * 60 * 24),
   );
   return Math.max(1, days);
 };
@@ -131,7 +130,7 @@ const CarDetail = () => {
         if (!canceled) {
           console.error("Failed to fetch car:", err);
           setCarError(
-            err?.response?.data?.message || err.message || "Failed to load car"
+            err?.response?.data?.message || err.message || "Failed to load car",
           );
         }
       } finally {
@@ -145,9 +144,9 @@ const CarDetail = () => {
       } catch {}
       fetchControllerRef.current = null;
     };
-    }, [id]);
+  }, [id]);
 
-    //get car by id as a particular car to book or fetch
+  //get car by id as a particular car to book or fetch
   if (!car && loadingCar)
     return <div className="p-6 text-white">Loading car...</div>;
   if (!car && carError)
@@ -210,9 +209,11 @@ const CarDetail = () => {
           state: formData.state,
           zipCode: formData.zipCode,
         },
-        carImage: car.image
-          ? buildImageSrc(Array.isArray(car.image) ? car.image[0] : car.image)
-          : undefined,
+        // carImage: car.image
+        //   ? buildImageSrc(Array.isArray(car.image) ? car.image[0] : car.image)
+        //   : undefined,
+        carImage: car.image || undefined,
+
       };
       const headers = { "Content-Type": "application/json" };
       if (token) headers.Authorization = `Bearer ${token}`;
@@ -223,7 +224,7 @@ const CarDetail = () => {
         {
           headers,
           signal: controller.signal,
-        }
+        },
       );
 
       if (res?.data?.url) {
@@ -237,7 +238,7 @@ const CarDetail = () => {
 
       toast.success(
         "Booking created. Please complete payment from bookings page.",
-        { position: "top-right", autoClose: 2000 }
+        { position: "top-right", autoClose: 2000 },
       );
       setFormData({
         pickupDate: "",
@@ -273,7 +274,7 @@ const CarDetail = () => {
     ? String(car.transmission).toLowerCase()
     : "standard";
 
-    //below is UI part
+  //below is UI part
   return (
     <div className={carDetailStyles.pageContainer}>
       <div className={carDetailStyles.contentContainer}>
@@ -288,12 +289,18 @@ const CarDetail = () => {
         <div className={carDetailStyles.mainLayout}>
           <div className={carDetailStyles.leftColumn}>
             <div className={carDetailStyles.imageCarousel}>
-              <img
+              {/* <img
                 src={buildImageSrc(carImages[currentImage] ?? car.image)}
                 alt={car.name}
                 className={carDetailStyles.carImage}
                 onError={(e) => handleImageError(e)}
+              /> */}
+              <img
+                src={carImages[currentImage] || car.image}
+                alt={car.name}
+                className={carDetailStyles.carImage}
               />
+
               {(carImages.length > 0 || (car.image && car.image !== "")) && (
                 <div className={carDetailStyles.carouselIndicators}>
                   {(carImages.length > 0 ? carImages : [car.image]).map(
@@ -303,10 +310,10 @@ const CarDetail = () => {
                         onClick={() => setCurrentImage(idx)}
                         aria-label={`Show image ${idx + 1}`}
                         className={carDetailStyles.carouselIndicator(
-                          idx === currentImage
+                          idx === currentImage,
                         )}
                       />
-                    )
+                    ),
                   )}
                 </div>
               )}
@@ -428,7 +435,7 @@ const CarDetail = () => {
                     </label>
                     <div
                       className={carDetailStyles.inputContainer(
-                        activeField === "pickupDate"
+                        activeField === "pickupDate",
                       )}
                     >
                       <div className={carDetailStyles.inputIcon}>
@@ -458,7 +465,7 @@ const CarDetail = () => {
                     </label>
                     <div
                       className={carDetailStyles.inputContainer(
-                        activeField === "returnDate"
+                        activeField === "returnDate",
                       )}
                     >
                       <div className={carDetailStyles.inputIcon}>
@@ -486,7 +493,7 @@ const CarDetail = () => {
                   </label>
                   <div
                     className={carDetailStyles.inputContainer(
-                      activeField === "pickupLocation"
+                      activeField === "pickupLocation",
                     )}
                   >
                     <div className={carDetailStyles.inputIcon}>
@@ -510,7 +517,7 @@ const CarDetail = () => {
                   <label className={carDetailStyles.formLabel}>Full Name</label>
                   <div
                     className={carDetailStyles.inputContainer(
-                      activeField === "name"
+                      activeField === "name",
                     )}
                   >
                     <div className={carDetailStyles.inputIcon}>
@@ -537,7 +544,7 @@ const CarDetail = () => {
                     </label>
                     <div
                       className={carDetailStyles.inputContainer(
-                        activeField === "email"
+                        activeField === "email",
                       )}
                     >
                       <div className={carDetailStyles.inputIcon}>
@@ -563,7 +570,7 @@ const CarDetail = () => {
                     </label>
                     <div
                       className={carDetailStyles.inputContainer(
-                        activeField === "phone"
+                        activeField === "phone",
                       )}
                     >
                       <div className={carDetailStyles.inputIcon}>
@@ -589,7 +596,7 @@ const CarDetail = () => {
                     <label className={carDetailStyles.formLabel}>City</label>
                     <div
                       className={carDetailStyles.inputContainer(
-                        activeField === "city"
+                        activeField === "city",
                       )}
                     >
                       <div className={carDetailStyles.inputIcon}>
@@ -613,7 +620,7 @@ const CarDetail = () => {
                     <label className={carDetailStyles.formLabel}>State</label>
                     <div
                       className={carDetailStyles.inputContainer(
-                        activeField === "state"
+                        activeField === "state",
                       )}
                     >
                       <div className={carDetailStyles.inputIcon}>
@@ -639,7 +646,7 @@ const CarDetail = () => {
                     </label>
                     <div
                       className={carDetailStyles.inputContainer(
-                        activeField === "zipCode"
+                        activeField === "zipCode",
                       )}
                     >
                       <div className={carDetailStyles.inputIcon}>

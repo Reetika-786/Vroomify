@@ -115,8 +115,9 @@ const addCar = () => {
       if (data.image) formData.append("image", data.image);
 
       await api.post("/api/cars", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        // headers: { "Content-Type": "multipart/form-data" },
       });
+      // console.log(res.data);
 
       showToast(
         "success",

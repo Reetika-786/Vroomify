@@ -44,8 +44,11 @@ const formatDate = (s) => {
         d.getFullYear();
 };
 
-const makeImageUrl = (filename) =>
-  filename ? `${BASE}/uploads/${filename}` : "";
+// const makeImageUrl = (filename) =>
+//   filename ? `${BASE}/uploads/${filename}` : "";
+
+const makeImageUrl = (url) => url || "";
+
 
 const normalizeDetails = (d = {}, car = {}) => ({
   seats: d.seats ?? d.numSeats ?? car.seats ?? "",

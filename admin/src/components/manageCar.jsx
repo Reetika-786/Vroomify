@@ -1,4 +1,4 @@
-import React, {useState, useEffect,useMemo,useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { styles } from "../assets/dummyStyles.js";
 import {
   FaGasPump,
@@ -9,7 +9,7 @@ import {
   FaTrash,
   FaCar,
   FaFilter,
-  FaTimes
+  FaTimes,
 } from "react-icons/fa";
 
 import axios from "axios";
@@ -23,27 +23,30 @@ const api = axios.create({
 
 // Utility functions
 //makeImageUrl ensures that whether you pass a full URL or just a filename, it always returns a correct, frontend-safe image URL pointing to your server's uploads folder
-const makeImageUrl = (img) => {
-  if (!img) return "";
-  const s = String(img).trim();
-  return /^https?:\/\//i.test(s)
-    ? s
-    : `${BASE}/uploads/${s.replace(/^\/+/, "").replace(/^uploads\//, "")}`;
-};
+
+// const makeImageUrl = (img) => {
+//   if (!img) return "";
+//   const s = String(img).trim();
+//   return /^https?:\/\//i.test(s)
+//     ? s
+//     : `${BASE}/uploads/${s.replace(/^\/+/, "").replace(/^uploads\//, "")}`;
+// };
+
+const makeImageUrl = (url) => url || "";
 
 //sanitizeImageForBackend strips out full URLs and cleans the path so only the actual filename is stored in the backend DB.
-const sanitizeImageForBackend = (img) => {
-  if (!img) return "";
-  let s = String(img).trim();
-  if (/^https?:\/\//i.test(s)) {
-    const idx = s.lastIndexOf("/uploads/");
-    s =
-      idx !== -1
-        ? s.slice(idx + "/uploads/".length)
-        : s.slice(s.lastIndexOf("/") + 1);
-  }
-  return s.replace(/^\/+/, "").replace(/^uploads\//, "");
-};
+// const sanitizeImageForBackend = (img) => {
+//   if (!img) return "";
+//   let s = String(img).trim();
+//   if (/^https?:\/\//i.test(s)) {
+//     const idx = s.lastIndexOf("/uploads/");
+//     s =
+//       idx !== -1
+//         ? s.slice(idx + "/uploads/".length)
+//         : s.slice(s.lastIndexOf("/") + 1);
+//   }
+//   return s.replace(/^\/+/, "").replace(/^uploads\//, "");
+// };
 
 //STORE IN DB
 const buildSafeCar = (raw = {}, idx = 0) => {
@@ -62,11 +65,12 @@ const buildSafeCar = (raw = {}, idx = 0) => {
     dailyRate: raw.dailyRate ?? raw.price ?? 0,
     status: raw.status || "available",
     _rawImage: raw.image ?? raw._rawImage ?? "",
-    image: raw.image
-      ? makeImageUrl(raw.image)
-      : raw._rawImage
-      ? makeImageUrl(raw._rawImage)
-      : "",
+    // image: raw.image
+    //   ? makeImageUrl(raw.image)
+    //   : raw._rawImage
+    //   ? makeImageUrl(raw._rawImage)
+    //   : "",
+    image: raw.image || "",
   };
 };
 
@@ -104,7 +108,7 @@ const CarCard = ({ car, onEdit, onDelete }) => {
       className={`${styles.gradientGray} ${styles.rounded2xl} ${styles.carCard} ${styles.borderGray} ${styles.borderHoverOrange}`}
     >
       <div className="relative">
-        <img src={car.iamge} alt={`${car.make} ${car.model}`} />
+        <img src={car.image} alt={`${car.make} ${car.model}`} />
         <div className="absolute top-4 right-4">
           <span
             className={`${styles.statusBadge} ${getStatusStyle(car.status)}`}
@@ -184,7 +188,8 @@ const EditModal = ({ car, onClose, onSubmit, onChange }) => {
     mileage: Number(c.mileage || 0),
     dailyRate: Number(c.dailyRate || 0),
     status: c.status || "available",
-    image: sanitizeImageForBackend(c.image || c._rawImage || ""),
+    // image: sanitizeImageForBackend(c.image || c._rawImage || ""),
+    image: c.image || "",
   });
 
   const handleSubmit = (e) => {
@@ -390,9 +395,11 @@ const manageCar = () => {
       setCars(
         raw.map((c, i) => ({
           ...buildSafeCar(c, i),
-          image: c.image ? makeImageUrl(c.image) : buildSafeCar(c, i).image,
-          _rawImage: c.image ?? c._rawImage ?? "",
-        }))
+          // image: c.image ? makeImageUrl(c.image) : buildSafeCar(c, i).image,
+          // _rawImage: c.image ?? c._rawImage ?? "",
+          image: c.image || "",
+          _rawImage: "",
+        })),
       );
     } catch (err) {
       console.error("Error fetching cars:", err);
@@ -409,7 +416,7 @@ const manageCar = () => {
       "all",
       ...Array.from(new Set(cars.map((c) => c.category || "Sedan"))),
     ],
-    [cars]
+    [cars],
   );
 
   const filteredCars = useMemo(
@@ -418,9 +425,9 @@ const manageCar = () => {
         (car) =>
           categoryFilter === "all" ||
           (car.category === categoryFilter) === "all" ||
-          car.category === categoryFilter
+          car.category === categoryFilter,
       ),
-    [cars, categoryFilter]
+    [cars, categoryFilter],
   );
 
   const handleDelete = async (identifier) => {
@@ -500,32 +507,31 @@ const manageCar = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredCars.map((car) => (
           <CarCard
-          key = {car.id}
-          car = {car}
-          onEdit={openEdit}
-          onDelete={handleDelete}
+            key={car.id}
+            car={car}
+            onEdit={openEdit}
+            onDelete={handleDelete}
           />
         ))}
       </div>
 
       {filteredCars.length === 0 && (
         <NoCarsView onResetFilter={() => setCategoryFilter("all")} />
-       )}
+      )}
 
-       {showEditModal && editingCar && (
+      {showEditModal && editingCar && (
         <EditModal
           car={editingCar}
-          onClose= {() => {
+          onClose={() => {
             setShowEditModal(false);
             setEditingCar(null);
           }}
           onSubmit={handleEditSubmit}
           onChange={setEditingCar}
         />
-       )}
+      )}
 
-       <ToastContainer theme="dark" />
-
+      <ToastContainer theme="dark" />
     </div>
   );
 };
