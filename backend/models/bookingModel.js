@@ -119,7 +119,7 @@ bookingSchema.post('save', async function(doc, next){
             await Car.findByIdAndUpdate(
                 carId,
                 {
-                    $pull: {bookings: {bookingId: doc_id}}
+                    $pull: {bookings: {bookingId: doc._id}}
                 },
                 {new : true}
             ).exec();
