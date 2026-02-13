@@ -56,7 +56,8 @@ const HomeCars = () => {
         params: { limit },
         signal: ctrl.signal,
       });
-      setCars(res.data?.data || []);
+      const json = res.data;
+      setCars(Array.isArray(json.data) ? json.data : Array.isArray(json) ? json : json.data || []);
     } catch (err) {
       const isCanceled =
         err?.code === "ERR_CANCELED" ||
