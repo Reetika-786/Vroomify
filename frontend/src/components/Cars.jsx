@@ -29,7 +29,7 @@ const Cars = () => {
   const [error, setError] = useState("");
 
   const abortControllerRef = useRef(null);
-  const base = "http://localhost:5000";
+  const base = import.meta.env.VITE_API_URL;
   const limit = 12;
   const fallbackImage = `${base}/uploads/default-car.png`;
 

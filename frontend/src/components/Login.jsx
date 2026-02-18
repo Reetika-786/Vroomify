@@ -37,7 +37,7 @@ const Login = () => {
       // console.log('login details' , credentials);
       // localStorage.setItem('authToken', 'sampleauthtoken12345');
 
-      const base = "http://localhost:5000";
+      const base = import.meta.env.VITE_API_URL;
       const url = `${base}/api/auth/login`;
 
       const res = await axios.post(url, credentials, {
